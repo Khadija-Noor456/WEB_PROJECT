@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CRUD App — Fake Store (Student Version)</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    body { background-color: #fafafa; padding: 2rem; font-family: Arial, sans-serif; }
+    h1 { color: #F3A11A; font-family: 'Playfair Display', serif; }
+    .table thead { background-color: #f8f9fa; }
+    .btn { border-radius: 6px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="mb-4 text-center">STORE</h1>
+
+    <!-- Add Product Form -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <h5>Add New Product</h5>
+        <form id="addForm" class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Product Title</label>
+            <input type="text" id="title" class="form-control" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Category</label>
+            <input type="text" id="category" class="form-control" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Price ($)</label>
+            <input type="number" id="price" class="form-control" required>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-success">Add Product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5>Product List</h5>
+        <div id="loading" class="text-muted mb-3">Loading products...</div>
+        <div class="table-responsive">
+          <table class="table align-middle" id="productTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price ($)</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productList"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm" class="row g-3">
+            <input type="hidden" id="editId">
+            <div class="col-12">
+              <label class="form-label">Title</label>
+              <input type="text" id="editTitle" class="form-control" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Category</label>
+              <input type="text" id="editCategory" class="form-control" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Price ($)</label>
+              <input type="number" id="editPrice" class="form-control" required>
+            </div>
+            <div class="col-12 text-end">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  let products = [];
+
+  // Save to LocalStorage
+  function saveLocal() {
+    localStorage.setItem("products", JSON.stringify(products));
+  }
+
+  // Load from LocalStorage
+  function loadLocal() {
+    const data = localStorage.getItem("products");
+    if (data) {
+      products = JSON.parse(data);
+      displayProducts();
+      $("#loading").text("Loaded from LocalStorage ✅");
+      return true;
+    }
+    return false;
+  }
+
+  // Display Products in Table
+  function displayProducts() {
+    let rows = "";
+    products.forEach(p => {
+      rows += `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.title}</td>
+          <td>${p.category}</td>
+          <td>$${p.price}</td>
+          <td>
+            <button class="btn btn-sm btn-warning editBtn" data-id="${p.id}">Edit</button>
+            <button class="btn btn-sm btn-danger deleteBtn" data-id="${p.id}">Delete</button>
+          </td>
+        </tr>`;
+    });
+    $("#productList").html(rows);
+    $("#loading").addClass("d-none");
+  }
+
+  // Load initial products
+  function loadProducts() {
+    if (loadLocal()) return; // Load from local if exists
+
+    $.ajax({
+      url: "https://fakestoreapi.com/products",
+      method: "GET",
+      success: function(data) {
+        products = data.map(p => ({
+          id: p.id,
+          title: p.title,
+          category: p.category,
+          price: p.price
+        }));
+        saveLocal();
+        displayProducts();
+      },
+      error: function() {
+        $("#loading").text(" Failed to load products.");
+      }
+    });
+  }
+
+  // Add New Product
+  $("#addForm").on("submit", function(e) {
+    e.preventDefault();
+    const newProduct = {
+      id: Date.now(), // unique ID
+      title: $("#title").val(),
+      category: $("#category").val(),
+      price: $("#price").val()
+    };
+
+    $.ajax({
+      url: "https://fakestoreapi.com/products",
+      method: "POST",
+      data: JSON.stringify(newProduct),
+      contentType: "application/json",
+      complete: function() {
+        products.push(newProduct);
+        saveLocal();
+        displayProducts();
+        $("#addForm")[0].reset();
+        alert(" Product added successfully!");
+      }
+    });
+  });
+
+  // Edit Button Click
+  $(document).on("click", ".editBtn", function() {
+    const id = $(this).data("id");
+    const p = products.find(x => x.id == id);
+    $("#editId").val(p.id);
+    $("#editTitle").val(p.title);
+    $("#editCategory").val(p.category);
+    $("#editPrice").val(p.price);
+    $("#editModal").modal("show");
+  });
+
+  // Save Changes (Update)
+  $("#editForm").on("submit", function(e) {
+    e.preventDefault();
+    const id = $("#editId").val();
+    const updated = {
+      id: Number(id),
+      title: $("#editTitle").val(),
+      category: $("#editCategory").val(),
+      price: $("#editPrice").val()
+    };
+
+    $.ajax({
+      url: `https://fakestoreapi.com/products/${id}`,
+      method: "PUT",
+      data: JSON.stringify(updated),
+      contentType: "application/json",
+      complete: function() {
+        const index = products.findIndex(p => p.id == id);
+        products[index] = updated;
+        saveLocal();
+        displayProducts();
+        $("#editModal").modal("hide");
+        alert("Product updated successfully!");
+      }
+    });
+  });
+
+  // Delete Product
+  $(document).on("click", ".deleteBtn", function() {
+    const id = $(this).data("id");
+    if (!confirm("Are you sure you want to delete this product?")) return;
+
+    $.ajax({
+      url: `https://fakestoreapi.com/products/${id}`,
+      method: "DELETE",
+      complete: function() {
+        products = products.filter(p => p.id != id);
+        saveLocal();
+        displayProducts();
+        alert("Product deleted successfully");
+      }
+    });
+  });
+
+  // Initialize
+  $(document).ready(loadProducts);
+  </script>
+</body>
+</html>
