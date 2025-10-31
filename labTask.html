@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nature Photography — Capture the Wild</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent: #F3A11A;
+      --accent-dark: #D98B00;
+      --text: #1A1A1A;
+      --muted: #666;
+      --bg: #FAF9F6;
+      --spacing: 1.5rem;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Lato", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem var(--spacing);
+    }
+
+    nav a.logo {
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    nav ul a:hover {
+      color: var(--accent-dark);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding: 5rem var(--spacing);
+      background: linear-gradient(rgba(250,249,246,0.9), rgba(250,249,246,0.9)),
+        url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=60') center/cover;
+    }
+
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 2.5rem;
+      color: var(--accent-dark);
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin: 1rem auto 2rem;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.8rem 1.6rem;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--accent-dark);
+    }
+
+    /* FEATURES / SERVICES */
+    .features {
+      max-width: 1100px;
+      margin: 4rem auto;
+      text-align: center;
+      padding: 0 var(--spacing);
+    }
+
+    .features h2 {
+      font-family: "Playfair Display", serif;
+      margin-bottom: 2rem;
+      color: var(--accent-dark);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .feature {
+      background: #fff;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .feature img {
+      width: 60px;
+      margin-bottom: 1rem;
+    }
+
+    .feature h3 {
+      font-family: "Playfair Display", serif;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      background: #fff;
+      padding: 4rem var(--spacing);
+      text-align: center;
+    }
+
+    .testimonials h2 {
+      font-family: "Playfair Display", serif;
+      color: var(--accent-dark);
+      margin-bottom: 2rem;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .testimonial {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .testimonial p {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 1rem;
+      color: var(--accent-dark);
+    }
+
+    /* SECONDARY CTA */
+    .cta {
+      text-align: center;
+      padding: 4rem var(--spacing);
+      background: linear-gradient(to right, var(--accent), var(--accent-dark));
+      color: #fff;
+    }
+
+    .cta h2 {
+      font-family: "Playfair Display", serif;
+      margin-bottom: 1rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #fff;
+      padding: 2rem var(--spacing);
+      text-align: center;
+      border-top: 1px solid #eee;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--accent-dark);
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 900px) {
+      .feature-grid, .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .feature-grid, .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ACCESSIBILITY */
+    a:focus, button:focus {
+      outline: 3px solid var(--accent-dark);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="#" class="logo">Nature Photography</a>
+      <ul>
+        <li><a href="#features">Services</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Capture Nature’s Soul Through the Lens</h1>
+    <p>Experience breathtaking landscapes and wildlife moments frozen in time — captured by a passionate nature photographer.</p>
+    <button class="btn">Explore My Work</button>
+  </section>
+
+  <section id="features" class="features">
+    <h2>My Services</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <img src="https://img.icons8.com/color/96/000000/mountain.png" alt="Landscape Photography icon">
+        <h3>Landscape Photography</h3>
+        <p>Stunning natural vistas, golden sunsets, and serene scenes that tell the story of the earth.</p>
+      </div>
+      <div class="feature">
+        <img src="https://img.icons8.com/color/96/000000/deer.png" alt="Wildlife Photography icon">
+        <h3>Wildlife Photography</h3>
+        <p>Capturing animals in their natural habitats — the raw beauty of the wild, preserved forever.</p>
+      </div>
+      <div class="feature">
+        <img src="https://img.icons8.com/color/96/000000/camera.png" alt="Workshops icon">
+        <h3>Photography Workshops</h3>
+        <p>Join guided outdoor sessions to learn camera techniques and composition skills.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="testimonials">
+    <h2>What Clients Say</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <p>“Absolutely mesmerizing photos! Each shot feels alive.”</p>
+        <strong>— Sarah M.</strong>
+      </div>
+      <div class="testimonial">
+        <p>“The workshop changed how I see the world through my lens.”</p>
+        <strong>— Daniel K.</strong>
+      </div>
+      <div class="testimonial">
+        <p>“Hired for a nature campaign — the results exceeded expectations!”</p>
+        <strong>— WildEarth Media</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Book Your Next Photography Session</h2>
+    <p>Let’s turn your outdoor experience into timeless art.</p>
+    <button class="btn" style="background:#fff;color:var(--accent-dark);">Get in Touch</button>
+  </section>
+
+  <footer id="contact">
+    <p>© 2025 Nature Photography | Designed for Lab Task 1</p>
+    <p>
+      <a href="#">Instagram</a> | 
+      <a href="#">Facebook</a> | 
+      <a href="#">Email</a>
+    </p>
+  </footer>
+
+</body>
+</html>
