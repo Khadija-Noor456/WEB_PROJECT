@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nature Photography — Capture the Wild</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent: #F3A11A;
+      --accent-dark: #D98B00;
+      --text: #1A1A1A;
+      --muted: #666;
+      --bg: #FAF9F6;
+      --spacing: 1.5rem;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Lato", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem var(--spacing);
+    }
+
+    nav a.logo {
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    nav ul a:hover {
+      color: var(--accent-dark);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 5rem var(--spacing);
+      background: linear-gradient(rgba(250,249,246,0.9), rgba(250,249,246,0.9)),
+        url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=60') center/cover;
+    }
+
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 2.5rem;
+      color: var(--accent-dark);
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin: 1rem auto 2rem;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.8rem 1.6rem;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--accent-dark);
+    }
+
+    .features {
+      max-width: 1100px;
+      margin: 4rem auto;
+      text-align: center;
+      padding: 0 var(--spacing);
+    }
+
+    .features h2 {
+      font-family: "Playfair Display", serif;
+      margin-bottom: 2rem;
+      color: var(--accent-dark);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .feature {
+      background: #fff;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .feature img {
+      width: 60px;
+      margin-bottom: 1rem;
+    }
+
+    .feature h3 {
+      font-family: "Playfair Display", serif;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .testimonials {
+      background: #fff;
+      padding: 4rem var(--spacing);
+      text-align: center;
+    }
+
+    .testimonials h2 {
+      font-family: "Playfair Display", serif;
+      color: var(--accent-dark);
+      margin-bottom: 2rem;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .testimonial {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .testimonial p {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 1rem;
+      color: var(--accent-dark);
+    }
+
+    .testimonial-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      object-fit: cover;
+    }
+
+    .stars {
+      color: #F3A11A;
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
+    }
+
+    .hidden-testimonial {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .hidden-testimonial.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cta {
+      text-align: center;
+      padding: 4rem var(--spacing);
+      background: linear-gradient(to right, var(--accent), var(--accent-dark));
+      color: #fff;
+    }
+
+    .cta h2 {
+      font-family: "Playfair Display", serif;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      background: #fff;
+      padding: 2rem var(--spacing);
+      text-align: center;
+      border-top: 1px solid #eee;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--accent-dark);
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      .feature-grid, .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .feature-grid, .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    a:focus, button:focus {
+      outline: 3px solid var(--accent-dark);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="#" class="logo">Nature Photography</a>
+      <ul>
+        <li><a href="#features">Services</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Capture Nature’s Soul Through the Lens</h1>
+    <p>Experience breathtaking landscapes and wildlife moments frozen in time — captured by a passionate nature photographer.</p>
+    <button class="btn">Explore My Work</button>
+  </section>
+
+  <section id="features" class="features">
+    <h2>My Services</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <img src="https://img.icons8.com/color/96/000000/mountain.png" alt="Landscape Photography icon">
+        <h3>Landscape Photography</h3>
+        <p>Stunning natural vistas, golden sunsets, and serene scenes that tell the story of the earth.</p>
+      </div>
+      <div class="feature">
+        <img src="https://img.icons8.com/color/96/000000/deer.png" alt="Wildlife Photography icon">
+        <h3>Wildlife Photography</h3>
+        <p>Capturing animals in their natural habitats — the raw beauty of the wild, preserved forever.</p>
+      </div>
+      <div class="feature">
+        <img src="https://img.icons8.com/color/96/000000/camera.png" alt="Workshops icon">
+        <h3>Photography Workshops</h3>
+        <p>Join guided outdoor sessions to learn camera techniques and composition skills.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="testimonials">
+    <h2>Customer Testimonials</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah." class="testimonial-img">
+        <p>“Absolutely mesmerizing photos!.”</p>
+        <div class="stars">★★★★☆</div>
+        <strong>— Sarah.</strong>
+      </div>
+      <div class="testimonial">
+        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Ali" class="testimonial-img">
+        <p>“The workshop was a nice experience .”</p>
+        <div class="stars">★★★☆☆</div>
+        <strong>— Ali.</strong>
+      </div>
+      <div class="testimonial hidden-testimonial">
+        <img src="https://randomuser.me/api/portraits/lego/1.jpg" alt="WildEarth Media" class="testimonial-img">
+        <p>“Hired for a nature campaign ,the results exceeded expectations”</p>
+        <div class="stars">★★★★★</div>
+        <strong>— WildEarth Media</strong>
+      </div>
+      <div class="testimonial hidden-testimonial">
+        <img src="https://randomuser.me/api/portraits/women/69.jpg" alt="Sabrina" class="testimonial-img">
+        <p>“The attention to detail is appreciative , although we can work around the color grading.”</p>
+        <div class="stars">★★☆☆☆</div>
+        <strong>— Sabrina</strong>
+      </div>
+    </div>
+    <button id="viewMoreBtn" class="btn" style="margin-top: 2rem;">View More</button>
+  </section>
+
+  <section class="cta">
+    <h2>Book Your Next Photography Session</h2>
+    <p>Let’s turn your outdoor experience into timeless art.</p>
+    <button class="btn" style="background:#fff;color:var(--accent-dark);">Get in Touch</button>
+  </section>
+
+  <footer id="contact">
+    <p>© 2025 Nature Photography | Designed for Lab Task 1</p>
+    <p>
+      <a href="#">Instagram</a> | 
+      <a href="#">Facebook</a> | 
+      <a href="#">Email</a>
+    </p>
+  </footer>
+
+  <script>
+    const viewMoreBtn = document.getElementById('viewMoreBtn');
+    const hiddenTestimonials = document.querySelectorAll('.hidden-testimonial');
+    viewMoreBtn.addEventListener('click', () => {
+      hiddenTestimonials.forEach(testimonial => testimonial.classList.add('show'));
+      viewMoreBtn.style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
