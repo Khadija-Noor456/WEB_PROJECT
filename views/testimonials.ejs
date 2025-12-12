@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+<section class="page-header">
+  <h1>Client Testimonials</h1>
+  <p>What people say about working with us</p>
+</section>
+
+<section class="testimonials">
+  <div class="testimonial-grid">
+    <% testimonials.forEach(testimonial => { %>
+      <div class="testimonial">
+        <p>"<%= testimonial.quote %>"</p>
+        <strong>— <%= testimonial.author %></strong>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Join Our Happy Clients</h2>
+  <p>Experience professional nature photography services.</p>
+  <a href="/contact" class="btn" style="background:#fff;color:var(--accent-dark);">Work With Us</a>
+</section>
+
+<%- include('partials/footer') %>
+</body>
+</html>
