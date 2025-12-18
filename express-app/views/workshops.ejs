@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+<section class="page-header">
+  <h1>Photography Workshops</h1>
+  <p>Learn from experience and improve your photography skills</p>
+</section>
+
+<section class="workshops-section">
+  <div class="workshop-list">
+    <div class="workshop-card">
+      <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=800&q=80" alt="Landscape workshop">
+      <div class="workshop-content">
+        <h3>Landscape Photography Mastery</h3>
+        <p class="workshop-duration">3-Day Workshop</p>
+        <p>Master composition, lighting, and post-processing techniques for stunning landscape photography.</p>
+        <ul>
+          <li>Golden hour shooting techniques</li>
+          <li>Long exposure mastery</li>
+          <li>Advanced composition</li>
+          <li>RAW editing workflow</li>
+        </ul>
+        <p class="workshop-price">$599</p>
+        <a href="/contact" class="btn">Enroll Now</a>
+      </div>
+    </div>
+
+    <div class="workshop-card">
+      <img src="https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=800&q=80" alt="Wildlife workshop">
+      <div class="workshop-content">
+        <h3>Wildlife Photography Expedition</h3>
+        <p class="workshop-duration">5-Day Workshop</p>
+        <p>Learn to capture stunning wildlife moments while respecting nature and animal behavior.</p>
+        <ul>
+          <li>Tracking and patience techniques</li>
+          <li>Telephoto lens mastery</li>
+          <li>Ethical wildlife photography</li>
+          <li>Action shot techniques</li>
+        </ul>
+        <p class="workshop-price">$899</p>
+        <a href="/contact" class="btn">Enroll Now</a>
+      </div>
+    </div>
+
+    <div class="workshop-card">
+      <img src="https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?auto=format&fit=crop&w=800&q=80" alt="Beginner workshop">
+      <div class="workshop-content">
+        <h3>Nature Photography Basics</h3>
+        <p class="workshop-duration">2-Day Workshop</p>
+        <p>Perfect for beginners wanting to start their nature photography journey.</p>
+        <ul>
+          <li>Camera basics and settings</li>
+          <li>Composition fundamentals</li>
+          <li>Understanding natural light</li>
+          <li>Photo editing introduction</li>
+        </ul>
+        <p class="workshop-price">$399</p>
+        <a href="/contact" class="btn">Enroll Now</a>
+      </div>
+    </div>
+  </div>
+</section>

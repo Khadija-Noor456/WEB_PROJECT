@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <section class="page-header">
+    <h1>Shop Our Collection</h1>
+    <p>Browse our curated selection of prints, workshops, and photography equipment</p>
+  </section>
+
+  <section class="shop-section">
+    <div class="shop-container">
+      <!-- Sidebar Filters -->
+      <aside class="shop-sidebar">
+        <h3>Filters</h3>
+        
+        <form action="/shop" method="GET" class="filter-form">
+          <!-- Search -->
+          <div class="filter-group">
+            <label>Search</label>
+            <input type="text" name="search" placeholder="Search products..." value="<%= filters.search || '' %>">
+          </div>
+
+          <!-- Category Filter -->
+          <div class="filter-group">
+            <label>Category</label>
+            <select name="category">
+              <option value="all">All Categories</option>
+              <% categories.forEach(cat => { %>
+                <option value="<%= cat %>" <%= filters.category === cat ? 'selected' : '' %>><%= cat %></option>
+              <% }) %>
+            </select>
+          </div>
+
+          <!-- Price Range -->
+          <div class="filter-group">
+            <label>Price Range</label>
+            <div class="price-inputs">
+              <input type="number" name="minPrice" placeholder="Min" value="<%= filters.minPrice || '' %>" min="0">
+              <span>to</span>
+              <input type="number" name="maxPrice" placeholder="Max" value="<%= filters.maxPrice || '' %>" min="0">
+            </div>
+          </div>
+
+          <!-- Sort -->
+          <div class="filter-group">
+            <label>Sort By</label>
+            <select name="sort">
+              <option value="newest" <%= filters.sort === 'newest' ? 'selected' : '' %>>Newest First</option>
+              <option value="price-asc" <%= filters.sort === 'price-asc' ? 'selected' : '' %>>Price: Low to High</option>
+              <option value="price-desc" <%= filters.sort === 'price-desc' ? 'selected' : '' %>>Price: High to Low</option>
+              <option value="name" <%= filters.sort === 'name' ? 'selected' : '' %>>Name: A-Z</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn">Apply Filters</button>
+          <a href="/shop" class="btn-secondary">Clear Filters</a>
+        </form>
+      </aside>
+
+      <!-- Products Grid -->
+      <div class="shop-main">
+        <div class="shop-header">
+          <p class="results-info">Showing <%= products.length %> of <%= totalProducts %> products</p>
+        </div>
+
+        <% if (products.length > 0) { %>
+          <div class="products-grid">
+            <% products.forEach(product => { %>
+              <div class="product-card">
+                <a href="/product/<%= product._id %>">
+                  <div class="product-image">
+                    <img src="<%= product.image %>" alt="<%= product.name %>">
+                    <% if (product.featured) { %>
+                      <span class="badge featured">Featured</span>
+                    <% } %>
+                    <% if (product.stock === 0) { %>
+                      <span class="badge out-of-stock">Out of Stock</span>
+                    <% } %>
+                  </div>
+                  <div class="product-info">
+                    <span class="product-category"><%= product.category %></span>
+                    <h3 class="product-title"><%= product.name %></h3>
+                    <p class="product-description"><%= product.description.substring(0, 80) %>...</p>
+                    <div class="product-footer">
+                      <span class="product-price">$<%= product.price.toFixed(2) %></span>
+                      <% if (product.rating > 0) { %>
+                        <span class="product-rating">⭐ <%= product.rating %></span>
+                      <% } %>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            <% }) %>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <% if (currentPage > 1) { %>
+              <a href="?page=<%= currentPage - 1 %><%= filters.category ? '&category=' + filters.category : '' %><%= filters.minPrice ? '&minPrice=' + filters.minPrice : '' %><%= filters.maxPrice ? '&maxPrice=' + filters.maxPrice : '' %><%= filters.sort ? '&sort=' + filters.sort : '' %>" class="btn-pagination">
+                ← Previous
+              </a>
+            <% } %>
+
+            <span class="page-info">Page <%= currentPage %> of <%= totalPages %></span>
+
+            <% if (currentPage < totalPages) { %>
+              <a href="?page=<%= currentPage + 1 %><%= filters.category ? '&category=' + filters.category : '' %><%= filters.minPrice ? '&minPrice=' + filters.minPrice : '' %><%= filters.maxPrice ? '&maxPrice=' + filters.maxPrice : '' %><%= filters.sort ? '&sort=' + filters.sort : '' %>" class="btn-pagination">
+                Next →
+              </a>
+            <% } %>
+          </div>
+        <% } else { %>
+          <div class="no-results">
+            <h3>No products found</h3>
+            <p>Try adjusting your filters or search terms.</p>
+            <a href="/shop" class="btn">View All Products</a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

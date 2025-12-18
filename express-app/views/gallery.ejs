@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+<section class="page-header">
+  <h1>Photography Gallery</h1>
+  <p>A collection of my finest nature photography work</p>
+</section>
+
+<section class="gallery-section">
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Mountain landscape">
+      <div class="gallery-overlay">
+        <h3>Mountain Vista</h3>
+        <p>Canadian Rockies</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80" alt="Forest path">
+      <div class="gallery-overlay">
+        <h3>Forest Trail</h3>
+        <p>Pacific Northwest</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1564415315949-7a0c4c73aab4?auto=format&fit=crop&w=800&q=80" alt="Wildlife">
+      <div class="gallery-overlay">
+        <h3>Wildlife Encounter</h3>
+        <p>Yellowstone National Park</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" alt="Lake sunset">
+      <div class="gallery-overlay">
+        <h3>Sunset Reflection</h3>
+        <p>Lake Louise</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80" alt="Northern lights">
+      <div class="gallery-overlay">
+        <h3>Aurora Borealis</h3>
+        <p>Iceland</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=800&q=80" alt="Desert landscape">
+      <div class="gallery-overlay">
+        <h3>Desert Dawn</h3>
+        <p>Arizona</p>
+      </div>
+    </div>
+  </div>
+</section>
