@@ -1,0 +1,150 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 mb-3 border-bottom">
+    <h1 class="h2"><%= product ? 'Edit Product' : 'Add New Product' %></h1>
+    <a href="/admin/products" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Products
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form action="<%= formAction %>" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="<%= formMethod %>">
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Basic Information -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Product Name *</label>
+                        <input type="text" class="form-control" id="name" name="name" 
+                               value="<%= product ? product.name : '' %>" required>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="price" class="form-label">Price *</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" class="form-control" id="price" name="price" 
+                                       step="0.01" min="0" value="<%= product ? product.price : '' %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="category" class="form-label">Category *</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="">Select Category</option>
+                                <% categories.forEach(category => { %>
+                                    <option value="<%= category %>" 
+                                            <%= product && product.category === category ? 'selected' : '' %>>
+                                        <%= category %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="stock" class="form-label">Stock Quantity</label>
+                            <input type="number" class="form-control" id="stock" name="stock" 
+                                   min="0" value="<%= product ? product.stock : '0' %>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="rating" class="form-label">Rating</label>
+                            <input type="number" class="form-control" id="rating" name="rating" 
+                                   min="0" max="5" step="0.1" value="<%= product ? product.rating : '0' %>">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image URL *</label>
+                        <input type="url" class="form-control" id="image" name="image" 
+                               value="<%= product ? product.image : '' %>" required 
+                               placeholder="https://example.com/image.jpg">
+                        <small class="text-muted">Enter the full URL of the product image</small>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="description" class="form-label">Description *</label>
+                        <textarea class="form-control" id="description" name="description" 
+                                  rows="4" required><%= product ? product.description : '' %></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Sidebar Options -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0">Product Settings</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="featured" name="featured" 
+                                           <%= product && product.featured ? 'checked' : '' %>>
+                                    <label class="form-check-label" for="featured">
+                                        Featured Product
+                                    </label>
+                                </div>
+                                <small class="text-muted">Featured products appear prominently on the website</small>
+                            </div>
+
+                            <% if (product) { %>
+                                <div class="mb-3">
+                                    <label class="form-label">Created Date</label>
+                                    <p class="text-muted"><%= new Date(product.createdAt).toLocaleString() %></p>
+                                </div>
+                            <% } %>
+
+                            <hr>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> 
+                                    <%= product ? 'Update Product' : 'Create Product' %>
+                                </button>
+                                <a href="/admin/products" class="btn btn-outline-secondary">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h6 class="mb-0">Image Preview</h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <div id="imagePreview" class="mb-3">
+                                <% if (product && product.image) { %>
+                                    <img src="<%= product.image %>" alt="Preview" class="img-fluid rounded">
+                                <% } else { %>
+                                    <div class="bg-light rounded d-flex align-items-center justify-content-center" 
+                                         style="height: 150px;">
+                                        <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                                    </div>
+                                <% } %>
+                            </div>
+                            <small class="text-muted">Image preview will update when URL changes</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Image preview functionality
+document.getElementById('image').addEventListener('input', function(e) {
+    const preview = document.getElementById('imagePreview');
+    const imageUrl = e.target.value;
+    
+    if (imageUrl) {
+        preview.innerHTML = `<img src="${imageUrl}" alt="Preview" class="img-fluid rounded" 
+                                  onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFNUU1RTUiLz48cGF0aCBkPSJNNjAgODBDNzMuMjUgODAgODMgNzAuMjUgODMgNTdDNzguMjU1IDUyLjI1IDcwLjI1IDUwIDYwIDUwQzQ2Ljc1IDUwIDM3IDU5Ljc1IDM3IDczQzM3IDg2LjI1IDQ2Ljc1IDk2IDYwIDk2TTE1MCAxNTRMMTQ0IDE0OEMxNDQgMTQ4IDEyOSAxMzEgMTAyIDEzMUM4NSAxMzEgNzIgMTQ0IDY5IDE0NEg1MUM0NyAxNDQgNDQgMTQxIDQ0IDEzN1Y0M0M0NCAzOSA0NyAzNiA1MSAzNkgxNDlDMTUzIDM2IDE1NiAzOSAxNTYgNDNWMTU0WiIgZmlsbD0iI0NDQyIvPjwvc3ZnPg=='">`;
+    } else {
+        preview.innerHTML = '<div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 150px;"><i class="bi bi-image text-muted" style="font-size: 3rem;"></i></div>';
+    }
+});
+</script>
