@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Admin - Orders</title>
+</head>
+<body>
+  <div class="page-header">
+    <h1>🔐 Admin - Order Management</h1>
+    <p>Total Orders: <strong><%= orders.length %></strong></p>
+  </div>
+
+  <% if (orders.length === 0) { %>
+    <p style="text-align: center;">No orders yet.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Email</th>
+          <th>Date</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.forEach(order => { %>
+          <tr>
+            <td><%= order._id.toString().substring(0, 8) %>...</td>
+            <td><%= order.email %></td>
+            <td><%= new Date(order.orderDate).toLocaleDateString() %></td>
+            <td><%= order.items.length %> item(s)</td>
+            <td>$<%= order.total.toFixed(2) %></td>
+            <td>
+              <span class="status status-<%= order.status.toLowerCase() %>"><%= order.status %></span>
+            </td>
+            <td>
+              <a href="/admin/orders/<%= order._id %>" class="btn btn-primary">View</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</body>
+</html>

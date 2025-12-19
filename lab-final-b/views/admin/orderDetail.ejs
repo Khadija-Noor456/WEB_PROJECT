@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Admin - Order Detail</title>
+</head>
+<body>
+  <div class="page-header">
+    <h1>🔐 Admin - Order Details</h1>
+  </div>
+
+  <div class="info-box">
+    <h3>Order Information</h3>
+    <p><strong>Order ID:</strong> <%= order._id %></p>
+    <p><strong>Date:</strong> <%= new Date(order.orderDate).toLocaleString() %></p>
+    <p><strong>Email:</strong> <%= order.email %></p>
+    <% if (order.address) { %><p><strong>Address:</strong> <%= order.address %></p><% } %>
+    <% if (order.phone) { %><p><strong>Phone:</strong> <%= order.phone %></p><% } %>
+  </div>
+
+  <div class="status-box">
+    <h3>Status Management</h3>
+    <p>Current Status: 
+      <span class="status status-<%= order.status.toLowerCase() %>">
+        <%= order.status %>
+      </span>
+    </p>
+
+    <% if (order.status === 'Placed') { %>
+      <form method="POST" action="/admin/orders/<%= order._id %>/update-status" class="product-actions">
+        <input type="hidden" name="newStatus" value="Processing">
+        <button type="submit" class="btn btn-processing">Move to Processing</button>
+      </form>
+    <% } else if (order.status === 'Processing') { %>
+      <form method="POST" action="/admin/orders/<%= order._id %>/update-status" class="product-actions">
+        <input type="hidden" name="newStatus" value="Delivered">
+        <button type="submit" class="btn btn-delivered">Mark as Delivered</button>
+      </form>
+    <% } else { %>
+      <p class="status status-delivered">✓ Order Delivered</p>
+    <% } %>
+  </div>
+
+  <h3>Order Items</h3>
+  <% order.items.forEach(item => { %>
+    <div class="cart-item">
+      <strong><%= item.productName %></strong><br>
+      Quantity: <%= item.quantity %> × $<%= item.price.toFixed(2) %> = $<%= item.totalPrice.toFixed(2) %>
+    </div>
+  <% }) %>
+
+  <div class="info-box">
+    <p>Subtotal: $<%= order.subtotal.toFixed(2) %></p>
+    <% if (order.discount > 0) { %>
+      <p style="color: var(--accent)">Discount: -$<%= order.discount.toFixed(2) %></p>
+    <% } %>
+    <h3>Total: $<%= order.total.toFixed(2) %></h3>
+  </div>
+
+  <a href="/admin/orders" class="btn btn-secondary">← Back to All Orders</a>
+</body>
+</html>
