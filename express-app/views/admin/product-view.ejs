@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <div class="admin-container">
+    <%- include('../partials/admin-sidebar') %>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <div class="header-actions">
+          <span class="user-info">👤 Admin User</span>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="product-view">
+          <div class="view-header">
+            <a href="/admin/products" class="btn-back">← Back to Products</a>
+            <div class="view-actions">
+              <a href="/admin/products/edit/<%= product._id %>" class="btn btn-primary">✏️ Edit</a>
+              <form action="/admin/products/delete/<%= product._id %>" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure?');">
+                <button type="submit" class="btn btn-danger">🗑️ Delete</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="product-detail-grid">
+            <!-- Product Image -->
+            <div class="product-image-large">
+              <img src="<%= product.image %>" alt="<%= product.name %>">
+              <% if (product.featured) { %>
+                <span class="badge badge-featured-large">⭐ Featured</span>
+              <% } %>
+            </div>
+
+            <!-- Product Details -->
+            <div class="product-details">
+              <h2><%= product.name %></h2>
+              <div class="detail-row">
+                <span class="label">Category:</span>
+                <span class="value"><%= product.category %></span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Price:</span>
+                <span class="value price">$<%= product.price.toFixed(2) %></span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Stock:</span>
+                <span class="value <%= product.stock > 10 ? 'stock-good' : product.stock > 0 ? 'stock-low' : 'stock-out' %>">
+                  <%= product.stock %> units
+                </span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Rating:</span>
+                <span class="value">⭐ <%= product.rating %> / 5</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Created:</span>
+                <span class="value"><%= new Date(product.createdAt).toLocaleDateString() %></span>
+              </div>
+              <div class="detail-row full">
+                <span class="label">Description:</span>
+                <p class="description"><%= product.description %></p>
+              </div>
+              <div class="detail-row">
+                <span class="label">Image URL:</span>
+                <p class="image-url"><%= product.image %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

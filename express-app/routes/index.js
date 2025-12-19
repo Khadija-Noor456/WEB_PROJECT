@@ -187,5 +187,21 @@ router.post('/contact', (req, res) => {
     message: 'Thank you for your message! We will get back to you soon.'
   });
 });
+// TEST: Check if products are in database
+router.get('/test-db', async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.send(`
+      <h1>Database Test</h1>
+      <p>Found ${products.length} products in MongoDB</p>
+      <ul>
+        ${products.map(p => `<li>${p.name} - $${p.price} (ID: ${p._id})</li>`).join('')}
+      </ul>
+      <a href="/shop">Go to Shop</a>
+    `);
+  } catch (error) {
+    res.send(`Error: ${error.message}`);
+  }
+});
 
 module.exports = router;
